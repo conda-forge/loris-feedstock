@@ -13,8 +13,6 @@ source:
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv
-  # skipping osx as aedat is not available for osx yet
-  skip: true  # [osx]
 
 requirements:
   build:
@@ -25,7 +23,7 @@ requirements:
     - pip
     - python
   run:
-    - aedat
+    - aedat  # [not osx]
     - python
     - tqdm
     - {{ pin_compatible('numpy') }}

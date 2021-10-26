@@ -31,10 +31,10 @@ requirements:
 test:
   imports:
     - loris
-  commands:
-    - pip check
-  requires:
-    - pip
+  commands:      # [not osx]
+    - pip check  # [not osx]
+  requires:      # [not osx]
+    - pip        # [not osx]
 
 about:
   home: https://github.com/neuromorphic-paris/loris

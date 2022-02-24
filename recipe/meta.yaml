@@ -18,23 +18,26 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - numpy                                  # [build_platform != target_platform]
   host:
     - numpy
     - pip
     - python
   run:
-    - aedat
+    - aedat  # [not aarch64 and not ppc64le]
     - python
     - tqdm
     - {{ pin_compatible('numpy') }}
 
-test:
-  imports:
-    - loris
-  commands:
-    - pip check
-  requires:
-    - pip
+test:            # [not aarch64 and not ppc64le]
+  imports:       # [not aarch64 and not ppc64le]
+    - loris      # [not aarch64 and not ppc64le]
+  commands:      # [not aarch64 and not ppc64le]
+    - pip check  # [not aarch64 and not ppc64le]
+  requires:      # [not aarch64 and not ppc64le]
+    - pip        # [not aarch64 and not ppc64le]
 
 about:
   home: https://github.com/neuromorphic-paris/loris

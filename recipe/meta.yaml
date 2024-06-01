@@ -9,6 +9,8 @@ package:
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/loris-{{ version }}.tar.gz
   sha256: 2c77d110182e6bb78a7eeffc0d7dfbc3d56883bb26717cb05ac46cabc3091669
+  patches:
+    - 12.patch
 
 build:
   number: 6

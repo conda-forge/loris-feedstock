@@ -1,21 +1,27 @@
-From 953b50d0185d3226872f58be930f06fb16aad41f Mon Sep 17 00:00:00 2001
-From: Tobias Fischer <info@tobiasfischer.info>
-Date: Sat, 1 Jun 2024 14:45:24 +1000
-Subject: [PATCH 1/4] NumPy 2 compatibility
-
----
- source/cpp/loris_extension.cpp | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
+diff --git a/setup.py b/setup.py
+index a6663b4..0250c41 100644
+--- a/setup.py
++++ b/setup.py
+@@ -98,8 +98,8 @@ def finalize_options(self):
+     long_description=long_description,
+     long_description_content_type='text/markdown',
+     packages=['loris'],
+-    setup_requires=['numpy'],
+-    install_requires=['aedat', 'numpy', 'tqdm'],
++    setup_requires=['numpy>=1.24'],
++    install_requires=['aedat', 'numpy>=1.24', 'tqdm'],
+     classifiers=[
+         'Programming Language :: Python :: 3',
+         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
 diff --git a/source/cpp/loris_extension.cpp b/source/cpp/loris_extension.cpp
-index 7e3e01f..31fdf80 100644
+index 7e3e01f..8117fc2 100644
 --- a/source/cpp/loris_extension.cpp
 +++ b/source/cpp/loris_extension.cpp
 @@ -2,6 +2,7 @@
  #include <Python.h>
  #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
  #include <numpy/arrayobject.h>
-+#include <numpy/npy_2_compat.h>
++#include "npy_2_compat.h"
  
  /// count determines the number of events in the given stream.
  template <sepia::type event_stream_type>
@@ -28,17 +34,6 @@ index 7e3e01f..31fdf80 100644
      if (!PyMapping_Check(fields)) {
          throw std::runtime_error("'events' must be a structured array");
      }
-
-From bd0a5b283bbc0fd87f4627841cdf7013df1a8888 Mon Sep 17 00:00:00 2001
-From: Tobias Fischer <info@tobiasfischer.info>
-Date: Sat, 1 Jun 2024 14:47:40 +1000
-Subject: [PATCH 2/4] Create npy_2_compat.h
-
----
- source/cpp/npy_2_compat.h | 249 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 249 insertions(+)
- create mode 100644 source/cpp/npy_2_compat.h
-
 diff --git a/source/cpp/npy_2_compat.h b/source/cpp/npy_2_compat.h
 new file mode 100644
 index 0000000..50e637f
@@ -294,51 +289,3 @@ index 0000000..50e637f
 +#endif  /* not internal build */
 +
 +#endif  /* NUMPY_CORE_INCLUDE_NUMPY_NPY_2_COMPAT_H_ */
-
-From 7c45a2914e6deb33cade27a442f17dd35c7daa00 Mon Sep 17 00:00:00 2001
-From: Tobias Fischer <info@tobiasfischer.info>
-Date: Sat, 1 Jun 2024 14:47:56 +1000
-Subject: [PATCH 3/4] local include
-
----
- source/cpp/loris_extension.cpp | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/source/cpp/loris_extension.cpp b/source/cpp/loris_extension.cpp
-index 31fdf80..8117fc2 100644
---- a/source/cpp/loris_extension.cpp
-+++ b/source/cpp/loris_extension.cpp
-@@ -2,7 +2,7 @@
- #include <Python.h>
- #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
- #include <numpy/arrayobject.h>
--#include <numpy/npy_2_compat.h>
-+#include "npy_2_compat.h"
- 
- /// count determines the number of events in the given stream.
- template <sepia::type event_stream_type>
-
-From ec5f544ce384b5694867b0cb9089bd244b4b110b Mon Sep 17 00:00:00 2001
-From: Tobias Fischer <info@tobiasfischer.info>
-Date: Sat, 1 Jun 2024 14:49:54 +1000
-Subject: [PATCH 4/4] Bump numpy req
-
----
- setup.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/setup.py b/setup.py
-index a6663b4..0250c41 100644
---- a/setup.py
-+++ b/setup.py
-@@ -98,8 +98,8 @@ def finalize_options(self):
-     long_description=long_description,
-     long_description_content_type='text/markdown',
-     packages=['loris'],
--    setup_requires=['numpy'],
--    install_requires=['aedat', 'numpy', 'tqdm'],
-+    setup_requires=['numpy>=1.24'],
-+    install_requires=['aedat', 'numpy>=1.24', 'tqdm'],
-     classifiers=[
-         'Programming Language :: Python :: 3',
-         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',

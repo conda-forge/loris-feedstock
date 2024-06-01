@@ -1,18 +1,3 @@
-diff --git a/setup.py b/setup.py
-index a6663b4..0250c41 100644
---- a/setup.py
-+++ b/setup.py
-@@ -98,8 +98,8 @@ def finalize_options(self):
-     long_description=long_description,
-     long_description_content_type='text/markdown',
-     packages=['loris'],
--    setup_requires=['numpy'],
--    install_requires=['aedat', 'numpy', 'tqdm'],
-+    setup_requires=['numpy>=1.24'],
-+    install_requires=['aedat', 'numpy>=1.24', 'tqdm'],
-     classifiers=[
-         'Programming Language :: Python :: 3',
-         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
 diff --git a/source/cpp/loris_extension.cpp b/source/cpp/loris_extension.cpp
 index 7e3e01f..8117fc2 100644
 --- a/source/cpp/loris_extension.cpp

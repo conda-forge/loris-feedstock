@@ -27,6 +27,7 @@ requirements:
   host:
     - numpy
     - pip
+    - setuptools
     - python
   run:
     - aedat  # [not aarch64 and not ppc64le]
